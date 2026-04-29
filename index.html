@@ -332,36 +332,36 @@ else alert("Code faux");
 
 /* PDF */
 
+
 function exportPDF(){
 
 const card = document.querySelector(".card.active");
 
-// wrapper propre SANS fond blanc
+// wrapper centré propre
 const wrapper = document.createElement("div");
 wrapper.style.width = "85mm";
 wrapper.style.height = "65mm";
 wrapper.style.display = "flex";
-wrapper.style.alignItems = "stretch";
-wrapper.style.justifyContent = "stretch";
-wrapper.style.padding = "0";
+wrapper.style.alignItems = "center";
+wrapper.style.justifyContent = "center";
 wrapper.style.margin = "0";
+wrapper.style.padding = "0";
 wrapper.style.background = "transparent";
-wrapper.style.overflow = "hidden";
 
 // clone carte
 const clone = card.cloneNode(true);
 
-// IMPORTANT anti bande blanche
+// FORCE CENTRAGE INTERNE
 clone.style.width = "100%";
 clone.style.height = "100%";
 clone.style.margin = "0";
 clone.style.padding = "0";
-clone.style.border = "none";
-clone.style.boxShadow = "none";
+clone.style.position = "relative";
+clone.style.left = "0";
 clone.style.transform = "none";
-clone.style.background = getComputedStyle(card).background;
+clone.style.boxSizing = "border-box";
 
-// force rendu propre
+// ajoute propre
 wrapper.appendChild(clone);
 document.body.appendChild(wrapper);
 
@@ -382,7 +382,7 @@ quality: 1
 html2canvas: {
 scale: 6,
 useCORS: true,
-backgroundColor: null,   // 🔥 IMPORTANT
+backgroundColor: null,
 scrollX: 0,
 scrollY: 0
 },
