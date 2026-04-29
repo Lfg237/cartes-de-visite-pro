@@ -340,14 +340,6 @@ script.src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.b
 
 script.onload=()=>{
 
-// 🔥 conteneur propre uniquement pour PDF
-let container=document.createElement("div");
-container.style.background="#fff";
-container.style.padding="20px";
-container.style.display="flex";
-container.style.justifyContent="center";
-
-// 🔥 récupérer carte active uniquement
 let card=document.querySelector(".card.active");
 
 if(!card){
@@ -355,45 +347,52 @@ alert("Aucune carte sélectionnée");
 return;
 }
 
-// clone EXACT de la carte
+// conteneur propre
+let container=document.createElement("div");
+container.style.display="flex";
+container.style.justifyContent="center";
+container.style.alignItems="center";
+container.style.width="100%";
+container.style.background="#fff";
+
+// clone carte
 let clone=card.cloneNode(true);
 
-// ❌ supprimer uniquement ce qui n’est PAS la carte
-// (rien dans la carte n’est touché sauf les boutons visuels)
+// supprimer boutons inutiles dans la carte
 clone.querySelectorAll(".btn").forEach(e=>e.remove());
 clone.querySelectorAll("a").forEach(e=>e.remove());
 
-// ✔ garder inputs + textes + design
+// garder style carte mais centré
 clone.style.display="flex";
-clone.style.position="relative";
-clone.style.margin="0 auto";
+clone.style.transform="scale(1)";
+clone.style.margin="0";
 
-// ajouter au conteneur PDF
 container.appendChild(clone);
 
-// export
 html2pdf().set({
-filename:"carte-pro.pdf",
+filename:"carte-visite.pdf",
+
 margin:0,
+
 image:{type:'jpeg',quality:1},
+
 html2canvas:{
 scale:3,
-useCORS:true,
-scrollY:0
+useCORS:true
 },
+
 jsPDF:{
 unit:"mm",
-format:"a4",
-orientation:"portrait"
+format:[90,50],   // 🔥 FORMAT CARTE DE VISITE
+orientation:"landscape"
 }
+
 }).from(container).save();
 
 };
 
 document.body.appendChild(script);
 }
-
-
 
 </script>
 
