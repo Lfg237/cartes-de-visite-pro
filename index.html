@@ -335,61 +335,48 @@ else alert("Code faux");
 
 function exportPDF(){
 
-let script=document.createElement("script");
-script.src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js";
+let card = document.querySelector(".card.active");
 
-script.onload=()=>{
+// clone propre de la carte
+let clone = card.cloneNode(true);
 
-let card=document.querySelector(".card.active");
+// wrapper format carte bancaire
+let wrapper = document.createElement("div");
+wrapper.style.width = "85.6mm";
+wrapper.style.height = "54mm";
+wrapper.style.display = "flex";
+wrapper.style.alignItems = "center";
+wrapper.style.justifyContent = "center";
+wrapper.style.background = "transparent";
 
-if(!card){
-alert("Aucune carte sélectionnée");
-return;
-}
+clone.style.transform = "scale(1)";
+clone.style.margin = "0";
 
-// conteneur propre
-let container=document.createElement("div");
-container.style.display="flex";
-container.style.justifyContent="center";
-container.style.alignItems="center";
-container.style.width="100%";
-container.style.background="#fff";
+wrapper.appendChild(clone);
+document.body.appendChild(wrapper);
 
-// clone carte
-let clone=card.cloneNode(true);
+let script = document.createElement("script");
+script.src = "https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js";
 
-// supprimer boutons (IMPORTANT)
-clone.querySelectorAll(".btn").forEach(e=>e.remove());
-clone.querySelectorAll("a").forEach(e=>e.remove());
-
-// 🔥 réduction réelle de taille
-clone.style.transform="scale(0.55)";
-clone.style.transformOrigin="top left";
-
-// ajustement conteneur pour éviter débordement
-container.style.padding="20px";
-
-container.appendChild(clone);
+script.onload = () => {
 
 html2pdf().set({
-filename:"carte-visite.pdf",
-
-margin:5, // petite marge propre
-
-image:{type:'jpeg',quality:1},
-
-html2canvas:{
-scale:2,   // 🔥 baisse du zoom rendu PDF
-useCORS:true
+margin: 0,
+filename: "carte.pdf",
+image: { type: "jpeg", quality: 1 },
+html2canvas: {
+scale: 4,
+useCORS: true,
+scrollY: 0
 },
-
-jsPDF:{
-unit:"mm",
-format:[90,50],  // carte de visite réelle
-orientation:"landscape"
+jsPDF: {
+unit: "mm",
+format: [85.6, 54],
+orientation: "landscape"
 }
-
-}).from(container).save();
+}).from(wrapper).save().then(() => {
+document.body.removeChild(wrapper);
+});
 
 };
 
