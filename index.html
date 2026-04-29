@@ -335,45 +335,56 @@ else alert("Code faux");
 
 function exportPDF(){
 
-let card = document.querySelector(".card.active");
+const card = document.querySelector(".card.active");
 
-// clone propre de la carte
-let clone = card.cloneNode(true);
-
-// wrapper format carte bancaire
-let wrapper = document.createElement("div");
-wrapper.style.width = "85.6mm";
-wrapper.style.height = "54mm";
+// clone propre
+const wrapper = document.createElement("div");
+wrapper.style.width = "85mm";
+wrapper.style.height = "55mm";
 wrapper.style.display = "flex";
 wrapper.style.alignItems = "center";
 wrapper.style.justifyContent = "center";
 wrapper.style.background = "transparent";
 
-clone.style.transform = "scale(1)";
+// clone carte
+const clone = card.cloneNode(true);
+
+// force remplissage propre
+clone.style.width = "100%";
+clone.style.height = "100%";
 clone.style.margin = "0";
+clone.style.transform = "scale(1)";
+clone.style.transformOrigin = "center";
 
 wrapper.appendChild(clone);
 document.body.appendChild(wrapper);
 
-let script = document.createElement("script");
+const script = document.createElement("script");
 script.src = "https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js";
 
 script.onload = () => {
 
 html2pdf().set({
 margin: 0,
-filename: "carte.pdf",
-image: { type: "jpeg", quality: 1 },
-html2canvas: {
-scale: 4,
-useCORS: true,
-scrollY: 0
+filename: "carte-visite-HD.pdf",
+
+image: {
+type: "jpeg",
+quality: 1
 },
+
+html2canvas: {
+scale: 6,   // 🔥 ultra HD
+useCORS: true,
+backgroundColor: null
+},
+
 jsPDF: {
 unit: "mm",
-format: [85.6, 54],
+format: [85, 55],   // ✔ format carte pro
 orientation: "landscape"
 }
+
 }).from(wrapper).save().then(() => {
 document.body.removeChild(wrapper);
 });
