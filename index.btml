@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cartes Pro</title>
+
+<style>
+body{
+margin:0;
+background:#0b1220;
+font-family:Arial;
+display:flex;
+flex-direction:column;
+align-items:center;
+color:#fff;
+}
+
+.controls{
+margin:10px;
+display:flex;
+gap:6px;
+flex-wrap:wrap;
+}
+
+button{
+background:gold;
+border:none;
+padding:8px 10px;
+border-radius:6px;
+font-weight:bold;
+cursor:pointer;
+color:#000;
+}
+
+.controls button{
+min-width:34px;
+height:34px;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:14px;
+font-weight:bold;
+}
+
+/* ===== CARTE ===== */
+.card{
+width:340px;
+height:220px;
+border-radius:14px;
+display:none;
+position:relative;
+overflow:hidden;
+padding:12px;
+box-shadow:0 10px 30px rgba(0,0,0,0.5);
+}
+
+.active{display:flex}
+
+/* ===== EDIT ===== */
+.edit[contenteditable="true"]{
+outline:1px dashed gold;
+}
+
+/* ===== LOGO ===== */
+.logo{
+width:45px;
+height:45px;
+border-radius:8px;
+overflow:hidden;
+}
+
+.logo img{
+width:100%;
+height:100%;
+object-fit:cover;
+}
+
+/* ===== TEXT ===== */
+.company{font-weight:bold;color:gold;font-size:14px;}
+.name{font-weight:bold;}
+.title{font-size:12px;color:#ccc;}
+.services{font-size:10px;color:#ddd;}
+
+/* ===== ACTIONS ===== */
+.actions{
+display:flex;
+flex-direction:column;
+gap:3px;
+margin-top:6px;
+}
+
+.btn-item{
+display:flex;
+align-items:center;
+gap:6px;
+}
+
+.btn{
+width:22px;
+height:22px;
+border-radius:50%;
+background:gold;
+display:flex;
+align-items:center;
+justify-content:center;
+cursor:pointer;
+font-size:11px;
+color:#000;
+}
+
+.btn-input{
+width:110px;
+font-size:10px;
+padding:2px 5px;
+border-radius:5px;
+border:none;
+outline:none;
+background:rgba(255,255,255,0.15);
+color:#fff;
+}
+
+/* ===== CARTE 1 ===== */
+.m1{
+background:linear-gradient(135deg,#001018,#003a66,#00aaff);
+flex-direction:column;
+justify-content:space-between;
+}
+
+/* ===== CARTE 2 (NUIT ÉTOILÉE PROPRE) ===== */
+.m2{
+background:radial-gradient(circle at top,#0b3a1b,#05210f,#020a06);
+flex-direction:column;
+justify-content:space-between;
+position:relative;
+overflow:hidden;
+}
+/* cadre fleurs */
+.m2::before{
+content:"";
+position:absolute;
+inset:8px;
+border:2px solid rgba(255,215,0,0.35);
+border-radius:12px;
+pointer-events:none;
+}
+
+/* fleurs */
+.m2 .flower{
+position:absolute;
+width:14px;
+height:14px;
+background:radial-gradient(circle, gold 30%, transparent 70%);
+border-radius:50%;
+}
+
+.m2 .f1{top:8px;left:8px;}
+.m2 .f2{top:8px;right:8px;}
+.m2 .f3{bottom:8px;left:8px;}
+.m2 .f4{bottom:8px;right:8px;}
+
+/* ===== CARTE 3 ===== */
+.m3{
+background:linear-gradient(135deg,#000,#3a0ca3,#7209b7);
+flex-direction:column;
+justify-content:space-between;
+}
+
+.circle{
+position:absolute;
+border-radius:50%;
+background:rgba(255,255,255,0.08);
+}
+
+.c1{width:120px;height:120px;top:-30px;right:-30px;}
+.c2{width:90px;height:90px;bottom:-20px;left:-20px;}
+.c3{width:60px;height:60px;top:70px;left:120px;}
+
+.hidden{display:none;}
+.signature{
+position:absolute;
+bottom:6px;
+right:8px;
+font-size:8px;
+color:rgba(255,255,255,0.7);
+text-align:right;
+line-height:1.2;
+font-style:italic;
+}
+
+/* version plus visible sur carte 2 */
+.m2 .signature{
+color:gold;
+opacity:0.9;
+}
+
+/* version élégante sur carte 1 */
+.m1 .signature{
+color:#ccc;
+}
+
+/* version premium sur carte 3 */
+.m3 .signature{
+color:#fff;
+opacity:0.8;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="controls">
+<button onclick="selectCard(0)">1</button>
+<button onclick="selectCard(1)">2</button>
+<button onclick="selectCard(2)">3</button>
+
+<button onclick="document.getElementById('logoInput').click()">📷</button>
+<button onclick="toggleEdit()">✏️</button>
+<button onclick="openPopup()">📄 PDF</button>
+</div>
+
+<input type="file" id="logoInput" hidden>
+
+<!-- POPUP -->
+<div id="popup" style="display:none;position:fixed;inset:0;background:#000c;justify-content:center;align-items:center;">
+  <div style="background:#fff;color:#000;padding:20px;border-radius:10px;display:flex;flex-direction:column;gap:10px;min-width:220px;">
+    
+    <input id="code" placeholder="Code 233">
+    
+    <div style="display:flex;gap:8px;justify-content:center;">
+      <button onclick="checkCode()">OK</button>
+      <button onclick="closePopup()" style="background:#ccc;">⬅ Retour</button>
+    </div>
+
+  </div>
+</div>
+
+<!-- CARTE 1 -->
+<div class="card m1 active">
+<div class="logo"><img src="https://via.placeholder.com/45"></div>
+
+<div class="company edit">Entreprise Luxe</div>
+<div class="services edit">Design • Branding</div>
+
+<div class="actions">
+<div class="btn-item"><div class="btn wa">💬</div><input class="btn-input"></div>
+<div class="btn-item"><div class="btn tel">📞</div><input class="btn-input"></div>
+<div class="btn-item"><div class="btn mail">✉️</div><input class="btn-input"></div>
+<div class="btn-item"><div class="btn site">🌐</div><input class="btn-input"></div>
+</div>
+
+<div class="name edit">Jean Dupont</div>
+<div class="title edit">CEO</div>
+<div class="signature">
+Ets Lesfacilitateurs Groupe<br>
+WhatsApp: +237 670 03 56 09
+</div>
+</div>
+
+<!-- CARTE 2 -->
+<div class="card m2">
+<div class="flower f1"></div>
+<div class="flower f2"></div>
+<div class="flower f3"></div>
+<div class="flower f4"></div>
+
+<div class="logo"><img src="https://via.placeholder.com/45"></div>
+
+<div class="company edit">Business Pro</div>
+<div class="services edit">Conseil • Gestion</div>
+
+<div class="actions">
+<div class="btn-item"><div class="btn wa">💬</div><input class="btn-input"></div>
+<div class="btn-item"><div class="btn tel">📞</div><input class="btn-input"></div>
+<div class="btn-item"><div class="btn mail">✉️</div><input class="btn-input"></div>
+<div class="btn-item"><div class="btn site">🌐</div><input class="btn-input"></div>
+</div>
+
+<div class="name edit">Marie Paul</div>
+<div class="title edit">Manager</div>
+<div class="signature">
+Ets Lesfacilitateurs Groupe<br>
+WhatsApp: +237 670 03 56 09
+</div>
+</div>
+
+<!-- CARTE 3 -->
+<div class="card m3">
+
+<div class="circle c1"></div>
+<div class="circle c2"></div>
+<div class="circle c3"></div>
+
+<div class="logo"><img src="https://via.placeholder.com/45"></div>
+
+<div class="company edit">Creative Studio</div>
+<div class="services edit">UI/UX • Design</div>
+
+<div class="actions">
+<div class="btn-item"><div class="btn wa">💬</div><input class="btn-input"></div>
+<div class="btn-item"><div class="btn tel">📞</div><input class="btn-input"></div>
+<div class="btn-item"><div class="btn mail">✉️</div><input class="btn-input"></div>
+<div class="btn-item"><div class="btn site">🌐</div><input class="btn-input"></div>
+</div>
+
+<div class="name edit">Alex Tech</div>
+<div class="title edit">Designer</div>
+<div class="signature">
+Ets Lesfacilitateurs Groupe<br>
+WhatsApp: +237 670 03 56 09
+</div>
+</div>
+
+<script>
+
+let cards=document.querySelectorAll(".card");
+let edit=false;
+
+function selectCard(i){
+cards.forEach(c=>c.classList.remove("active"));
+cards[i].classList.add("active");
+}
+
+function toggleEdit(){
+edit=!edit;
+document.querySelectorAll(".edit").forEach(e=>{
+e.contentEditable=edit;
+});
+}
+
+/* LOGO */
+document.getElementById("logoInput").addEventListener("change",e=>{
+let r=new FileReader();
+r.onload=()=>{
+document.querySelectorAll(".logo img").forEach(i=>i.src=r.result);
+};
+r.readAsDataURL(e.target.files[0]);
+});
+
+/* POPUP */
+function openPopup(){
+document.getElementById("popup").style.display="flex";
+}
+
+function checkCode(){
+if(document.getElementById("code").value==="233"){
+document.getElementById("popup").style.display="none";
+exportPDF();
+}else alert("Code faux");
+}
+
+/* PDF */
+function exportPDF(){
+let s=document.createElement("script");
+s.src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js";
+s.onload=()=>{
+html2pdf().from(document.body).save();
+};
+document.body.appendChild(s);
+}
+function closePopup(){
+document.getElementById("popup").style.display="none";
+}
+
+</script>
+
+</body>
+</html>
