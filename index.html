@@ -280,21 +280,45 @@ r.onload=()=>document.querySelectorAll(".logo img").forEach(i=>i.src=r.result);
 r.readAsDataURL(e.target.files[0]);
 };
 
-/* LIENS */
-function updateLinks(){
-document.querySelectorAll(".btn-item").forEach(item=>{
-let input=item.querySelector(".btn-input").value;
+/* 🔥 LIENS CORRIGÉS */
+function updateLinks(item){
+let input=item.querySelector(".btn-input").value.trim();
 let link=item.querySelector("a");
 
-if(link.classList.contains("wa")) link.href="https://wa.me/"+input.replace("+","");
-if(link.classList.contains("tel")) link.href="tel:"+input;
-if(link.classList.contains("mail")) link.href="mailto:"+input;
-if(link.classList.contains("site")) link.href=input;
-});
+if(!input) return;
+
+if(link.classList.contains("wa")){
+link.href="https://wa.me/"+input.replace("+","");
 }
 
-document.querySelectorAll(".btn-input").forEach(i=>{
-i.addEventListener("input",updateLinks);
+if(link.classList.contains("tel")){
+link.href="tel:"+input;
+}
+
+if(link.classList.contains("mail")){
+link.href="mailto:"+input;
+}
+
+if(link.classList.contains("site")){
+if(!input.startsWith("http")){
+input="https://"+input;
+}
+link.href=input;
+}
+}
+
+/* 👉 IMPORTANT : MAJ AU CLIC */
+document.querySelectorAll(".btn-item").forEach(item=>{
+let link=item.querySelector("a");
+
+link.addEventListener("click",(e)=>{
+updateLinks(item);
+
+if(!link.href){
+e.preventDefault();
+alert("Remplis le champ d'abord");
+}
+});
 });
 
 /* POPUP */
@@ -313,6 +337,7 @@ s.src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle
 s.onload=()=>html2pdf().from(document.body).save();
 document.body.appendChild(s);
 }
+
 
 </script>
 
