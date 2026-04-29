@@ -331,6 +331,8 @@ else alert("Code faux");
 }
 
 /* PDF */
+
+
 function exportPDF(){
 
 let script=document.createElement("script");
@@ -338,31 +340,46 @@ script.src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.b
 
 script.onload=()=>{
 
-// 🔥 On clone uniquement la zone des cartes
-let cards=document.querySelectorAll(".card");
-
+// 📄 conteneur PDF propre A4
 let container=document.createElement("div");
+container.style.width="210mm";
+container.style.minHeight="297mm";
+container.style.padding="15mm";
+container.style.boxSizing="border-box";
+container.style.display="flex";
+container.style.flexDirection="column";
+container.style.alignItems="center";
+container.style.gap="15px";
 container.style.background="#fff";
-container.style.padding="10px";
 
-// ajouter seulement les cartes
-cards.forEach(c=>{
-let clone=c.cloneNode(true);
+// 🔥 récupérer uniquement cartes visibles
+document.querySelectorAll(".card").forEach(card=>{
 
-// ❌ supprimer tout ce qui est inutile dans le PDF
-clone.querySelectorAll(".btn-input").forEach(i=>i.remove());
-clone.querySelectorAll(".btn").forEach(b=>b.remove());
-clone.querySelectorAll("a").forEach(a=>a.remove());
+let clone=card.cloneNode(true);
+
+// ❌ supprimer interface
+clone.querySelectorAll(".btn").forEach(e=>e.remove());
+clone.querySelectorAll(".btn-input").forEach(e=>e.remove());
+clone.querySelectorAll("button").forEach(e=>e.remove());
+clone.querySelectorAll("input").forEach(e=>e.remove());
+
+// style propre PDF
+clone.style.display="flex";
+clone.style.transform="scale(1)";
+clone.style.margin="0 auto";
 
 container.appendChild(clone);
 });
 
-// masquer popup + controls automatiquement
+// 🔥 export centré A4
 html2pdf().set({
-filename:"cartes.pdf",
+filename:"cartes-pro.pdf",
+margin:0,
+image:{type:'jpeg',quality:1},
 html2canvas:{
 scale:3,
-useCORS:true
+useCORS:true,
+scrollY:0
 },
 jsPDF:{
 unit:"mm",
