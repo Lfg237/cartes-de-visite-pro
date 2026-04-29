@@ -358,32 +358,34 @@ container.style.background="#fff";
 // clone carte
 let clone=card.cloneNode(true);
 
-// supprimer boutons inutiles dans la carte
+// supprimer boutons (IMPORTANT)
 clone.querySelectorAll(".btn").forEach(e=>e.remove());
 clone.querySelectorAll("a").forEach(e=>e.remove());
 
-// garder style carte mais centré
-clone.style.display="flex";
-clone.style.transform="scale(1)";
-clone.style.margin="0";
+// 🔥 réduction réelle de taille
+clone.style.transform="scale(0.55)";
+clone.style.transformOrigin="top left";
+
+// ajustement conteneur pour éviter débordement
+container.style.padding="20px";
 
 container.appendChild(clone);
 
 html2pdf().set({
 filename:"carte-visite.pdf",
 
-margin:0,
+margin:5, // petite marge propre
 
 image:{type:'jpeg',quality:1},
 
 html2canvas:{
-scale:3,
+scale:2,   // 🔥 baisse du zoom rendu PDF
 useCORS:true
 },
 
 jsPDF:{
 unit:"mm",
-format:[90,50],   // 🔥 FORMAT CARTE DE VISITE
+format:[90,50],  // carte de visite réelle
 orientation:"landscape"
 }
 
@@ -393,7 +395,6 @@ orientation:"landscape"
 
 document.body.appendChild(script);
 }
-
 </script>
 
 </body>
