@@ -340,40 +340,40 @@ script.src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.b
 
 script.onload=()=>{
 
-// 📄 conteneur PDF propre A4
+// 🔥 conteneur propre uniquement pour PDF
 let container=document.createElement("div");
-container.style.width="210mm";
-container.style.minHeight="297mm";
-container.style.padding="15mm";
-container.style.boxSizing="border-box";
-container.style.display="flex";
-container.style.flexDirection="column";
-container.style.alignItems="center";
-container.style.gap="15px";
 container.style.background="#fff";
+container.style.padding="20px";
+container.style.display="flex";
+container.style.justifyContent="center";
 
-// 🔥 récupérer uniquement cartes visibles
-document.querySelectorAll(".card").forEach(card=>{
+// 🔥 récupérer carte active uniquement
+let card=document.querySelector(".card.active");
 
+if(!card){
+alert("Aucune carte sélectionnée");
+return;
+}
+
+// clone EXACT de la carte
 let clone=card.cloneNode(true);
 
-// ❌ supprimer interface
+// ❌ supprimer uniquement ce qui n’est PAS la carte
+// (rien dans la carte n’est touché sauf les boutons visuels)
 clone.querySelectorAll(".btn").forEach(e=>e.remove());
-clone.querySelectorAll(".btn-input").forEach(e=>e.remove());
-clone.querySelectorAll("button").forEach(e=>e.remove());
-clone.querySelectorAll("input").forEach(e=>e.remove());
+clone.querySelectorAll("a").forEach(e=>e.remove());
 
-// style propre PDF
+// ✔ garder inputs + textes + design
 clone.style.display="flex";
-clone.style.transform="scale(1)";
+clone.style.position="relative";
 clone.style.margin="0 auto";
 
+// ajouter au conteneur PDF
 container.appendChild(clone);
-});
 
-// 🔥 export centré A4
+// export
 html2pdf().set({
-filename:"cartes-pro.pdf",
+filename:"carte-pro.pdf",
 margin:0,
 image:{type:'jpeg',quality:1},
 html2canvas:{
@@ -392,6 +392,8 @@ orientation:"portrait"
 
 document.body.appendChild(script);
 }
+
+
 
 </script>
 
