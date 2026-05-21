@@ -319,72 +319,80 @@ alert("Code faux");
 }
 /* PDF */
 
+
 function exportPDF(){
 
 const card = document.querySelector(".card.active");
 
+/* wrapper invisible mais stable */
 const wrapper = document.createElement("div");
 
-wrapper.style.width = "85mm";
-wrapper.style.height = "65mm";
+wrapper.style.position = "fixed";
+wrapper.style.left = "0";
+wrapper.style.top = "0";
+wrapper.style.width = "100%";
 wrapper.style.display = "flex";
-wrapper.style.alignItems = "center";
 wrapper.style.justifyContent = "center";
-wrapper.style.margin = "0";
-wrapper.style.padding = "0";
+wrapper.style.padding = "20px";
+wrapper.style.background = "transparent";
 
 const clone = card.cloneNode(true);
 
-clone.style.width = "100%";
-clone.style.height = "100%";
+clone.style.width = "340px";
+clone.style.height = "220px";
 clone.style.margin = "0";
-clone.style.padding = "0";
 clone.style.boxSizing = "border-box";
+clone.style.transform = "none";
+clone.style.position = "relative";
 
 wrapper.appendChild(clone);
 document.body.appendChild(wrapper);
 
-/* sécurité chargement lib */
-if(typeof html2pdf === "undefined"){
-
-const script = document.createElement("script");
-script.src = "https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js";
-
-script.onload = runExport;
-document.body.appendChild(script);
-
-}else{
-runExport();
-}
-
-function runExport(){
+function run(){
 
 html2pdf().set({
-
 margin: 0,
 filename: "carte-pro.pdf",
 
-image: { type: "jpeg", quality: 1 },
+image: {
+type: "jpeg",
+quality: 1
+},
 
 html2canvas: {
-scale: 5,
+scale: 4,
 useCORS: true,
+scrollX: 0,
+scrollY: 0,
 backgroundColor: null
 },
 
 jsPDF: {
-unit: "mm",
-format: [85, 65],
+unit: "px",
+format: [340, 220],   /* IMPORTANT : même taille que la carte */
 orientation: "landscape"
 }
 
-}).from(wrapper).save().then(()=>{
+}).from(clone).save().then(()=>{
 document.body.removeChild(wrapper);
 });
 
 }
 
+/* chargement sécurisé */
+if(typeof html2pdf === "undefined"){
+
+const s = document.createElement("script");
+s.src = "https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js";
+s.onload = run;
+document.body.appendChild(s);
+
+}else{
+run();
 }
+
+}
+
 </script>  </body>
 
 </html>
