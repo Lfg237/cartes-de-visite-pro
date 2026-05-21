@@ -46,7 +46,9 @@ flex-direction:column;
 justify-content:space-between;
 }
 
-.active{display:flex}
+.active{
+display:flex;
+}
 
 /* LOGO */
 .logo{
@@ -55,6 +57,7 @@ height:45px;
 border-radius:8px;
 overflow:hidden;
 }
+
 .logo img{
 width:100%;
 height:100%;
@@ -62,10 +65,25 @@ object-fit:cover;
 }
 
 /* TEXT */
-.company{font-weight:bold;color:gold;font-size:14px;}
-.name{font-weight:bold;}
-.title{font-size:12px;color:#ccc;}
-.services{font-size:10px;color:#ddd;}
+.company{
+font-weight:bold;
+color:gold;
+font-size:14px;
+}
+
+.name{
+font-weight:bold;
+}
+
+.title{
+font-size:12px;
+color:#ccc;
+}
+
+.services{
+font-size:10px;
+color:#ddd;
+}
 
 /* ACTIONS */
 .actions{
@@ -103,9 +121,17 @@ color:#fff;
 }
 
 /* BACKGROUNDS */
-.m1{background:linear-gradient(135deg,#001018,#003a66,#00aaff);}
-.m2{background:radial-gradient(circle at top,#0b3a1b,#05210f,#020a06);}
-.m3{background:linear-gradient(135deg,#000,#3a0ca3,#7209b7);}
+.m1{
+background:linear-gradient(135deg,#001018,#003a66,#00aaff);
+}
+
+.m2{
+background:radial-gradient(circle at top,#0b3a1b,#05210f,#020a06);
+}
+
+.m3{
+background:linear-gradient(135deg,#000,#3a0ca3,#7209b7);
+}
 
 /* SIGNATURE */
 .signature{
@@ -115,145 +141,200 @@ right:8px;
 font-size:8px;
 opacity:0.8;
 }
+
+/* MODE EDIT */
+.edit[contenteditable="true"]{
+background:rgba(255,215,0,0.12);
+min-width:20px;
+display:inline-block;
+}
 </style>
 </head>
 
 <body>
 
 <div class="controls">
+
 <button onclick="selectCard(0)">1</button>
 <button onclick="selectCard(1)">2</button>
 <button onclick="selectCard(2)">3</button>
 
 <button onclick="logoInput.click()">📷</button>
+
 <button onclick="toggleEdit()">✏️</button>
-<button onclick="openPopup()">📄 PDF</button>
+
+<button onclick="exportWord()">📝 WORD</button>
+
 </div>
 
 <input type="file" id="logoInput" hidden>
 
-<!-- POPUP -->
-<div id="popup" style="display:none;position:fixed;inset:0;background:#000c;justify-content:center;align-items:center;">
-<div style="background:#fff;color:#000;padding:20px;border-radius:10px;">
-<input id="code" placeholder="Code 233">
-<br><br>
-<button onclick="checkCode()">OK</button>
-<button onclick="closePopup()">Retour</button>
-</div>
-</div>
-
 <!-- ===== CARTE 1 ===== -->
 <div class="card m1 active">
-<div class="logo"><img src="https://via.placeholder.com/45"></div>
+
+<div class="logo">
+<img src="https://via.placeholder.com/45">
+</div>
 
 <div class="company edit">Entreprise Luxe</div>
-<div class="services edit">Design • Branding</div>
+
+<div class="services edit">
+Design • Branding
+</div>
 
 <div class="actions">
+
 <div class="btn-item">
-<a class="link wa" target="_blank"><div class="btn">💬</div></a>
+<a class="link wa" target="_blank">
+<div class="btn">💬</div>
+</a>
 <input class="btn-input" placeholder="+237...">
 </div>
 
 <div class="btn-item">
-<a class="link tel"><div class="btn">📞</div></a>
+<a class="link tel">
+<div class="btn">📞</div>
+</a>
 <input class="btn-input" placeholder="+237...">
 </div>
 
 <div class="btn-item">
-<a class="link mail"><div class="btn">✉️</div></a>
+<a class="link mail">
+<div class="btn">✉️</div>
+</a>
 <input class="btn-input" placeholder="email@mail.com">
 </div>
 
 <div class="btn-item">
-<a class="link site" target="_blank"><div class="btn">🌐</div></a>
+<a class="link site" target="_blank">
+<div class="btn">🌐</div>
+</a>
 <input class="btn-input" placeholder="https://...">
 </div>
+
 </div>
 
 <div class="name edit">Jean Dupont</div>
+
 <div class="title edit">CEO</div>
 
 <div class="signature">
 Ets Lesfacilitateurs Groupe<br>
 WhatsApp: +237670035609
 </div>
+
 </div>
 
 <!-- ===== CARTE 2 ===== -->
 <div class="card m2">
-<div class="logo"><img src="https://via.placeholder.com/45"></div>
+
+<div class="logo">
+<img src="https://via.placeholder.com/45">
+</div>
 
 <div class="company edit">Business Pro</div>
-<div class="services edit">Conseil • Gestion</div>
+
+<div class="services edit">
+Conseil • Gestion
+</div>
 
 <div class="actions">
+
 <div class="btn-item">
-<a class="link wa" target="_blank"><div class="btn">💬</div></a>
+<a class="link wa" target="_blank">
+<div class="btn">💬</div>
+</a>
 <input class="btn-input" placeholder="+237...">
 </div>
 
 <div class="btn-item">
-<a class="link tel"><div class="btn">📞</div></a>
+<a class="link tel">
+<div class="btn">📞</div>
+</a>
 <input class="btn-input" placeholder="+237...">
 </div>
 
 <div class="btn-item">
-<a class="link mail"><div class="btn">✉️</div></a>
+<a class="link mail">
+<div class="btn">✉️</div>
+</a>
 <input class="btn-input" placeholder="email@mail.com">
 </div>
 
 <div class="btn-item">
-<a class="link site" target="_blank"><div class="btn">🌐</div></a>
+<a class="link site" target="_blank">
+<div class="btn">🌐</div>
+</a>
 <input class="btn-input" placeholder="https://...">
 </div>
+
 </div>
 
 <div class="name edit">Marie Paul</div>
+
 <div class="title edit">Manager</div>
 
 <div class="signature">
 Ets Lesfacilitateurs Groupe<br>
 WhatsApp: +237670035609
 </div>
+
 </div>
 
 <!-- ===== CARTE 3 ===== -->
 <div class="card m3">
-<div class="logo"><img src="https://via.placeholder.com/45"></div>
+
+<div class="logo">
+<img src="https://via.placeholder.com/45">
+</div>
 
 <div class="company edit">Creative Studio</div>
-<div class="services edit">UI/UX • Design</div>
+
+<div class="services edit">
+UI/UX • Design
+</div>
 
 <div class="actions">
+
 <div class="btn-item">
-<a class="link wa" target="_blank"><div class="btn">💬</div></a>
+<a class="link wa" target="_blank">
+<div class="btn">💬</div>
+</a>
 <input class="btn-input" placeholder="+237...">
 </div>
 
 <div class="btn-item">
-<a class="link tel"><div class="btn">📞</div></a>
+<a class="link tel">
+<div class="btn">📞</div>
+</a>
 <input class="btn-input" placeholder="+237...">
 </div>
 
 <div class="btn-item">
-<a class="link mail"><div class="btn">✉️</div></a>
+<a class="link mail">
+<div class="btn">✉️</div>
+</a>
 <input class="btn-input" placeholder="email@mail.com">
 </div>
 
 <div class="btn-item">
-<a class="link site" target="_blank"><div class="btn">🌐</div></a>
+<a class="link site" target="_blank">
+<div class="btn">🌐</div>
+</a>
 <input class="btn-input" placeholder="https://...">
 </div>
+
 </div>
 
 <div class="name edit">Alex Tech</div>
+
 <div class="title edit">Designer</div>
 
 <div class="signature">
 Ets Lesfacilitateurs Groupe<br>
 WhatsApp: +237670035609
 </div>
+
 </div>
 
 <script>
@@ -261,146 +342,258 @@ WhatsApp: +237670035609
 let cards=document.querySelectorAll(".card");
 let edit=false;
 
+/* SELECT CARD */
 function selectCard(i){
+
 cards.forEach(c=>c.classList.remove("active"));
+
 cards[i].classList.add("active");
+
 }
 
+/* EDIT MODE */
 function toggleEdit(){
+
 edit=!edit;
+
 document.querySelectorAll(".edit").forEach(e=>{
+
 e.contentEditable=edit;
+
+if(edit){
+
+e.style.outline="2px dashed gold";
+e.style.padding="4px";
+e.style.borderRadius="6px";
+e.style.cursor="text";
+
+e.addEventListener("click",enableFocus);
+
+}else{
+
+e.style.outline="none";
+e.style.padding="";
+e.style.borderRadius="";
+e.style.cursor="default";
+
+e.removeEventListener("click",enableFocus);
+
+}
+
 });
+
+if(edit){
+alert("✏️ Mode édition activé");
+}else{
+alert("✅ Mode édition désactivé");
+}
+
+}
+
+/* FIX MOBILE */
+function enableFocus(){
+
+this.focus();
+
+document.execCommand("selectAll",false,null);
+
 }
 
 /* LOGO */
 logoInput.onchange=e=>{
+
 let r=new FileReader();
-r.onload=()=>document.querySelectorAll(".logo img").forEach(i=>i.src=r.result);
-r.readAsDataURL(e.target.files[0]);
+
+r.onload=()=>{
+
+document.querySelectorAll(".logo img").forEach(i=>{
+
+i.src=r.result;
+
+});
+
 };
 
-/* 🔥 LIENS CORRIGÉS */
+r.readAsDataURL(e.target.files[0]);
+
+};
+
+/* UPDATE LINKS */
 function updateLinks(item){
+
 let input=item.querySelector(".btn-input").value.trim();
+
 let link=item.querySelector("a");
 
-if(!input) return;
+if(!input){
+return;
+}
 
 if(link.classList.contains("wa")){
+
 link.href="https://wa.me/"+input.replace("+","");
+
 }
 
 if(link.classList.contains("tel")){
+
 link.href="tel:"+input;
+
 }
 
 if(link.classList.contains("mail")){
+
 link.href="mailto:"+input;
+
 }
 
 if(link.classList.contains("site")){
+
 if(!input.startsWith("http")){
 input="https://"+input;
 }
+
 link.href=input;
-}
+
 }
 
-/* 👉 IMPORTANT : MAJ AU CLIC */
+}
+
+/* LINK CLICK */
 document.querySelectorAll(".btn-item").forEach(item=>{
+
 let link=item.querySelector("a");
 
 link.addEventListener("click",(e)=>{
+
 updateLinks(item);
 
 if(!link.href){
+
 e.preventDefault();
+
 alert("Remplis le champ d'abord");
-}
-});
-});
 
-/* POPUP */
-function openPopup(){popup.style.display="flex";}
-function closePopup(){popup.style.display="none";}
-
-function checkCode(){
-if(code.value==="233"){closePopup();exportPDF();}
-else alert("Code faux");
 }
 
-/* PDF */
-
-
-function exportPDF(){
-
-const card = document.querySelector(".card.active");
-
-// wrapper centré propre
-const wrapper = document.createElement("div");
-wrapper.style.width = "85mm";
-wrapper.style.height = "65mm";
-wrapper.style.display = "flex";
-wrapper.style.alignItems = "center";
-wrapper.style.justifyContent = "center";
-wrapper.style.margin = "0";
-wrapper.style.padding = "0";
-wrapper.style.background = "transparent";
-
-// clone carte
-const clone = card.cloneNode(true);
-
-// FORCE CENTRAGE INTERNE
-clone.style.width = "100%";
-clone.style.height = "100%";
-clone.style.margin = "0";
-clone.style.padding = "0";
-clone.style.position = "relative";
-clone.style.left = "0";
-clone.style.transform = "none";
-clone.style.boxSizing = "border-box";
-
-// ajoute propre
-wrapper.appendChild(clone);
-document.body.appendChild(wrapper);
-
-const script = document.createElement("script");
-script.src = "https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js";
-
-script.onload = () => {
-
-html2pdf().set({
-margin: 0,
-filename: "carte-HD.pdf",
-
-image: {
-type: "jpeg",
-quality: 1
-},
-
-html2canvas: {
-scale: 6,
-useCORS: true,
-backgroundColor: null,
-scrollX: 0,
-scrollY: 0
-},
-
-jsPDF: {
-unit: "mm",
-format: [85, 65],
-orientation: "landscape"
-}
-
-}).from(wrapper).save().then(() => {
-document.body.removeChild(wrapper);
 });
 
-};
+});
+function exportWord(){
 
-document.body.appendChild(script);
+const card = document.querySelector(".card.active").cloneNode(true);
+
+/* retire inputs */
+card.querySelectorAll("input").forEach(i=>i.remove());
+
+/* retire mode édition */
+card.querySelectorAll(".edit").forEach(e=>{
+e.style.outline="none";
+e.contentEditable=false;
+});
+
+/* contenu HTML */
+const content = `
+<html xmlns:o='urn:schemas-microsoft-com:office:office'
+xmlns:w='urn:schemas-microsoft-com:office:word'
+xmlns='http://www.w3.org/TR/REC-html40'>
+
+<head>
+<meta charset="utf-8">
+
+<style>
+
+body{
+font-family:Arial;
+background:#0b1220;
+padding:20px;
+color:white;
 }
+
+.card{
+width:340px;
+height:220px;
+border-radius:14px;
+padding:12px;
+color:white;
+position:relative;
+overflow:hidden;
+}
+
+.m1{
+background:linear-gradient(135deg,#001018,#003a66,#00aaff);
+}
+
+.m2{
+background:radial-gradient(circle at top,#0b3a1b,#05210f,#020a06);
+}
+
+.m3{
+background:linear-gradient(135deg,#000,#3a0ca3,#7209b7);
+}
+
+.logo img{
+width:45px;
+height:45px;
+border-radius:8px;
+}
+
+.company{
+font-weight:bold;
+color:gold;
+font-size:14px;
+}
+
+.name{
+font-weight:bold;
+}
+
+.title{
+font-size:12px;
+color:#ccc;
+}
+
+.services{
+font-size:10px;
+color:#ddd;
+}
+
+.signature{
+position:absolute;
+bottom:6px;
+right:8px;
+font-size:8px;
+}
+
+</style>
+
+</head>
+
+<body>
+${card.outerHTML}
+</body>
+</html>
+`;
+
+/* FORMAT WORD MOBILE FIX */
+const source = 'data:application/vnd.ms-word;charset=utf-8,' + encodeURIComponent(content);
+
+const link = document.createElement("a");
+
+link.href = source;
+
+link.download = "carte-pro.doc";
+
+document.body.appendChild(link);
+
+link.click();
+
+document.body.removeChild(link);
+
+alert("📝 Téléchargement Word lancé");
+
+}
+
 </script>
 
 </body>
