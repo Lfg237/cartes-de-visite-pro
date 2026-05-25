@@ -122,11 +122,16 @@ z-index:9999;
 </style>  </head>  <body>  <div class="controls">
 <button onclick="selectCard(0)">1</button>
 <button onclick="selectCard(1)">2</button>
-<button onclick="selectCard(2)">3</button>  <button onclick="logoInput.click()">📷</button>
+<button onclick="selectCard(2)">3<button onclick="document.getElementById('logoInput').click()">📷</button>
 <button onclick="toggleEdit()">✏️</button>
 <button onclick="openPopup()">📄 PDF</button>
 
-</div>  <input type="file" id="logoInput" hidden>  <!-- POPUP -->  <div id="popup" style="display:none;position:fixed;inset:0;background:#000c;justify-content:center;align-items:center;">    
+</div> <input
+type="file"
+id="logoInput"
+accept="image/*"
+hidden>
+<!-- POPUP -->  <div id="popup" style="display:none;position:fixed;inset:0;background:#000c;justify-content:center;align-items:center;">    
 <div style="background:#fff;color:#000;padding:20px;border-radius:10px;">    
 <input id="code" placeholder="Code 233">    
 <br><br>    
@@ -257,12 +262,39 @@ document.execCommand("selectAll", false, null);
 }
 
 /* LOGO */
-logoInput.onchange=e=>{
-let r=new FileReader();
-r.onload=()=>document.querySelectorAll(".logo img").forEach(i=>i.src=r.result);
-r.readAsDataURL(e.target.files[0]);
+
+const logoInput = document.getElementById("logoInput");
+
+logoInput.addEventListener("change", function(e){
+
+const file = e.target.files[0];
+
+if(!file){
+return;
+}
+
+if(!file.type.startsWith("image/")){
+alert("Veuillez sélectionner une image");
+return;
+}
+
+const reader = new FileReader();
+
+reader.onload = function(event){
+
+document
+.querySelectorAll(".logo img")
+.forEach(img=>{
+
+img.src = event.target.result;
+
+});
+
 };
 
+reader.readAsDataURL(file);
+
+});
 /* 🔥 LIENS CORRIGÉS */
 function updateLinks(item){
 let input=item.querySelector(".btn-input").value.trim();
@@ -400,7 +432,6 @@ run();
 }
 
 }
-
 </script>  </body>
 
 </html>
